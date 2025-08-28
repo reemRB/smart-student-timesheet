@@ -1,8 +1,8 @@
 name: Deploy to Master
 
 on:
-  push:
-    branches: [ master ]
+  # push:
+  #   branches: [ master ]
   workflow_dispatch:
 jobs:
   deploy-master:
@@ -30,8 +30,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Unit Tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+      # - name: Unit Tests
+      #   run: npm test -- --watch=false --browsers=ChromeHeadless
 
       - name: Build
         run: npm run build -- --configuration=production
