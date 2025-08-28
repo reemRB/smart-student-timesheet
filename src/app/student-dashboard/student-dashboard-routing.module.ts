@@ -4,7 +4,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { StudentEntryComponent } from './student-entry/student-entry.component';
 import { NgModule } from '@angular/core';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: StudentDashboardComponent,

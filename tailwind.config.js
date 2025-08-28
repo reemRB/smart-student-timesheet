@@ -3,7 +3,7 @@ const path = require('path');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    path.resolve(__dirname, 'src/**/*.{html,ts}'),
+    './src/**/*.{html,ts}',
   ],
   theme: {
     extend: {
