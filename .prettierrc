@@ -1,0 +1,18 @@
+{
+  "endOfLine": "lf",
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["*.component.html", "*.page.html", "*.dialog.html"],
+      "options": {
+        "parser": "angular"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
+}
