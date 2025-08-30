@@ -1,0 +1,12 @@
+<div class="timesheet-table">
+  <div></div>
+
+  <div class="days-row" *ngFor="let day of days">{{ day }}</div>
+
+  <ng-container *ngFor="let time of timeSlots">
+    <div class="time-row">{{ time }}</div>
+    <ng-container *ngFor="let col of [].constructor(7)">
+      <div class="cell"></div>
+    </ng-container>
+  </ng-container>
+</div>
