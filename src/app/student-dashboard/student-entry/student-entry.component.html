@@ -1,1 +1,17 @@
-<p>student-id-input works!</p>
+<div class="min-h-screen flex items-center justify-center bg-grey-light">
+  <form class="w-full max-w-md flex flex-col items-center">
+    <input
+      type="text"
+      [(ngModel)]="studentId"
+      name="studentId"
+      placeholder="Insert Student ID"
+      class="font-regular border border-primary border-opacity-20 focus:border-primary p-3 rounded-lg w-full outline-none placeholder-gray-400"
+    />
+    <button
+      type="submit"
+      class="mt-6 px-6 py-2 bg-primary text-white rounded-lg w-full"
+    >
+      Submit
+    </button>
+  </form>
+</div>
