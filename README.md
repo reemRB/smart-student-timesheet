@@ -43,9 +43,6 @@ The backend is mocked via a **Postman API** with only two supported student IDs:
   - `xl`, `2xl`, `3xl` → large monitors
 - Overflow handling with horizontal scroll on small screens.
 
-## 🖼️ Screenshots
-*(Add screenshots of your timetable here)*
-
 ## 📦 Tech Stack
 - Angular
 - RxJS
