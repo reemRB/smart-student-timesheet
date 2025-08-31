@@ -13,5 +13,6 @@ type StudentDetails = {
   sessionID: string;
   email: string;
   address: string;
+  number: string;
   classes: { className: string; classTime: string }[];
 };

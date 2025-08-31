@@ -1,14 +1,27 @@
+@if (studentFacade.studentDetails$ | async; as studentDetails) {
 <div class="shadow-lg bg-grey-light rounded-xl p-10">
   <div class="flex items-center gap-6">
     <div class="avatar w-24 h-24 rounded-full"></div>
     <div>
-      <h2 class="text-2xl font-semi text-primary">Alex Fawaz</h2>
+      <h2 class="text-2xl font-semi text-primary">
+        {{studentDetails.data.firstName}} {{studentDetails.data.lastName}}
+      </h2>
       <div class="flex gap-8 mt-2 text-primary">
-        <div><span class="font-semi">ID:</span> 2021-0001</div>
-        <div><span class="font-semi">Number:</span> (555) 123-4567</div>
-        <div><span class="font-semi">Email:</span> caleb.whitegmail.com</div>
-        <div><span class="font-semi">Address:</span> 123 Elm Street</div>
+        <div>
+          <span class="font-semi">ID:</span> {{studentDetails.data.studentId}}
+        </div>
+        <div>
+          <span class="font-semi">Number:</span> {{studentDetails.data.number}}
+        </div>
+        <div>
+          <span class="font-semi">Email:</span> {{studentDetails.data.email}}
+        </div>
+        <div>
+          <span class="font-semi">Address:</span>
+          {{studentDetails.data.address}}
+        </div>
       </div>
     </div>
   </div>
 </div>
+}

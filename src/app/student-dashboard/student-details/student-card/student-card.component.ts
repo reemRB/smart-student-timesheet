@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { StudentFacade } from '../../core/student.facade';
 
 @Component({
   selector: 'app-student-card',
@@ -9,4 +10,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './student-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentCardComponent {}
+export class StudentCardComponent {
+  public studentFacade = inject(StudentFacade);
+}

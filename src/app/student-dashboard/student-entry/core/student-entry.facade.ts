@@ -1,10 +1,10 @@
 import { BehaviorSubject } from 'rxjs';
-import { StudentService } from '../../core/student.service';
 import { StudentEntryFormController } from './student-entry-form-controller';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StudentFacade } from '../../core/student.facade';
 
 export interface IStudentEntryFacadeDependencies {
-  studentService: StudentService;
+  studentFacade: StudentFacade;
   router: Router;
   route: ActivatedRoute;
 }
@@ -22,7 +22,7 @@ export class StudentEntryFacade {
     this.studentEntryFormController = new StudentEntryFormController({
       router: this.dependencies.router,
       route: this.dependencies.route,
-      studentService: this.dependencies.studentService,
+      studentFacade: this.dependencies.studentFacade,
     });
   }
 

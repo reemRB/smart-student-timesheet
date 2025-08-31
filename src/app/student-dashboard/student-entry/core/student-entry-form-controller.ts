@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { StudentService } from '../../core/student.service';
+import { StudentFacade } from '../../core/student.facade';
 
 export type StudentEntrySubmitResult = 'success' | 'invalid' | 'error';
 
@@ -11,7 +11,7 @@ export interface IStudentEntryFormController {
 export interface IStudentEntryFormControllerDependencies {
   router: Router;
   route: ActivatedRoute;
-  studentService: StudentService;
+  studentFacade: StudentFacade;
 }
 
 export class StudentEntryFormController implements IStudentEntryFormController {
@@ -21,10 +21,11 @@ export class StudentEntryFormController implements IStudentEntryFormController {
     studentId: string,
   ): Promise<StudentEntrySubmitResult> {
     try {
-      const response = await firstValueFrom(
-        this.dependencies.studentService.fetchStudentData(studentId),
+      await this.dependencies.studentFacade.fetchStudentDetails(studentId);
+      const studentDetails = await firstValueFrom(
+        this.dependencies.studentFacade.studentDetails$,
       );
-      if (!response?.data) {
+      if (!studentDetails) {
         return 'invalid';
       }
       await this.dependencies.router.navigate([studentId], {
