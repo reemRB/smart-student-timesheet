@@ -1,15 +1,20 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { StudentEntryFormController } from './student-entry-form-controller';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentFacade } from '../../core/student.facade';
 
-export interface IStudentEntryFacadeDependencies {
+interface IStudentEntryFacade {
+  submit(studentId: string): Promise<'success' | 'invalid' | 'error'>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
+}
+interface IStudentEntryFacadeDependencies {
   studentFacade: StudentFacade;
   router: Router;
   route: ActivatedRoute;
 }
 
-export class StudentEntryFacade {
+export class StudentEntryFacade implements IStudentEntryFacade {
   private studentEntryFormController: StudentEntryFormController;
 
   private _loading = new BehaviorSubject<boolean>(false);

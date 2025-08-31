@@ -52,7 +52,6 @@ export class StudentTimesheetTableComponent {
   ];
 
   public classByCell = new Map<CellKey, ClassBlock>();
-  public activeCellKey: CellKey | null = null;
 
   constructor() {
     this.studentDetailsFacade = new StudentDetailsFacade({
