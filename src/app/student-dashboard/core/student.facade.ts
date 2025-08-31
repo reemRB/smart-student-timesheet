@@ -1,11 +1,11 @@
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
-import { StudentDashboardService } from './student.service';
+import { StudentService } from './student.service';
 import { StudentDetailsResponse } from './student';
 
 export interface IStudentFacadeDependencies {
-  studentService: StudentDashboardService;
+  studentService: StudentService;
 }
-export class StudentDashboardFacade {
+export class StudentFacade {
   private _studentDetails = new BehaviorSubject<
     StudentDetailsResponse | undefined
   >(undefined);
@@ -14,7 +14,7 @@ export class StudentDashboardFacade {
 
   constructor(public dependencies: IStudentFacadeDependencies) {}
 
-  public async fetchStudentDetails(studentId: string) {
+  public async fetchStudentDetails(studentId: string): Promise<void> {
     const response = await firstValueFrom(
       this.dependencies.studentService.fetchStudentData(studentId),
     );
