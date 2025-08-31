@@ -2,17 +2,14 @@
 import { StudentFacade } from '../../core/student.facade';
 import { map } from 'rxjs/operators';
 import { StudentDetailsResponse } from '../../core/student';
-import * as CryptoJS from 'crypto-js';
 
-export type CellKey = `${string}|${string}`;
-
-export type ClassBlock = {
-  className: string;
-  roomNumber: string;
-  durationMin: number;
-  topPercentage: number;
-  heightPercentage: number;
-};
+import {
+  cellKey,
+  CellKey,
+  ClassBlock,
+  dayName,
+  hourLabel,
+} from './student-details-helper-functions';
 
 interface StudentDetailsFacadeDependencies {
   studentFacade: StudentFacade;
@@ -54,14 +51,14 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
       const classTime = new Date(Number(classData.classTimestamp));
       const durationMin = classData.duration ?? 60;
 
-      const day = this.dayName(classTime);
-      const hourLabel = this.hourLabel(classTime);
+      const day = dayName(classTime);
+      const hour = hourLabel(classTime);
 
       const topPercentage = (classTime.getMinutes() / 60) * 100;
 
       const heightPercentage = (durationMin / 60) * 100;
 
-      const key = `${day}|${hourLabel}` as CellKey;
+      const key = `${day}|${hour}` as CellKey;
 
       const block: ClassBlock = {
         className: classData.className,
@@ -75,24 +72,25 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
     this.computeActiveAndNextActiveCellKey();
   }
 
-  public decryptSessionID(resp?: StudentDetailsResponse) {
+  private decryptSessionID(resp?: StudentDetailsResponse) {
     const sessionID = resp?.data?.sessionID;
     if (!sessionID) throw new Error('No sessionID found');
 
     const [encryptedTimestamp, studentId] = sessionID.split('.');
-    const bytes = CryptoJS.AES.decrypt(encryptedTimestamp, this.secretKey);
-    const timestamp = bytes.toString(CryptoJS.enc.Utf8);
+
+    const timestamp = atob(encryptedTimestamp);
+
     return { timestamp, studentId };
   }
 
   public isActiveClass(day: string, time: string): boolean {
     if (!this.activeCellKey) return false;
-    return this.activeCellKey === this.cellKey(day, time);
+    return this.activeCellKey === cellKey(day, time);
   }
 
   public isNextClass(day: string, time: string): boolean {
     if (!this.nextActiveCellKey) return false;
-    return this.nextActiveCellKey === this.cellKey(day, time);
+    return this.nextActiveCellKey === cellKey(day, time);
   }
 
   private computeActiveAndNextActiveCellKey(): void {
@@ -137,9 +135,9 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
         nowInReferenceWeekMs >= classStartInReferenceWeekMs &&
         nowInReferenceWeekMs < classEndInReferenceWeekMs
       ) {
-        this.activeCellKey = this.cellKey(
-          this.dayName(classStartTime),
-          this.hourLabel(classStartTime),
+        this.activeCellKey = cellKey(
+          dayName(classStartTime),
+          hourLabel(classStartTime),
         );
         return;
       }
@@ -153,13 +151,13 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
       // Update if this class is closer than the previous best
       if (gapMs < smallestGapMs) {
         smallestGapMs = gapMs;
-        nextDayLabel = this.dayName(classStartTime);
-        nextHourLabel = this.hourLabel(classStartTime);
+        nextDayLabel = dayName(classStartTime);
+        nextHourLabel = hourLabel(classStartTime);
       }
     }
 
     if (smallestGapMs !== Number.POSITIVE_INFINITY) {
-      this.nextActiveCellKey = this.cellKey(nextDayLabel, nextHourLabel);
+      this.nextActiveCellKey = cellKey(nextDayLabel, nextHourLabel);
     }
   }
 
@@ -186,37 +184,11 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
     return referenceDate;
   }
 
-  private cellKey(day: string, hourLabel: string): CellKey {
-    return `${day}|${hourLabel}` as CellKey;
-  }
-
   public getClassBlock(
     map: Map<CellKey, ClassBlock>,
     day: string,
     time: string,
   ) {
-    return map.get(this.cellKey(day, time));
-  }
-
-  private dayName(date: Date): string {
-    const namesMondayFirst = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ];
-    const idx = (date.getDay() + 6) % 7; // Monday=0 … Sunday=6
-    return namesMondayFirst[idx];
-  }
-
-  private hourLabel(d: Date): string {
-    const h24 = d.getHours();
-    const ampm = h24 < 12 ? 'AM' : 'PM';
-    let h = h24 % 12;
-    if (h === 0) h = 12;
-    return `${h}:00 ${ampm}`;
+    return map.get(cellKey(day, time));
   }
 }
