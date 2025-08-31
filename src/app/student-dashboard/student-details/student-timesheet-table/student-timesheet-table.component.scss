@@ -1,17 +1,16 @@
 .timesheet-table {
-  display: grid;
+  @apply rounded-xl grid w-full shadow-lg;
   grid-template-columns: 4.5rem repeat(7, 1fr);
   grid-template-rows: 3rem repeat(10, 4.5rem);
 
   .days-row {
-    @apply flex items-center justify-center py-3 text-primary text-sm border border-primary;
+    @apply flex items-center justify-center py-3 text-primary text-sm border-l border-l-primary border-b border-b-primary border-opacity-[0.2];
   }
+
   .time-row {
-    @apply flex items-center justify-center text-primary text-sm border border-primary;
+    @apply flex items-center justify-center text-primary text-sm border-t border-t-primary border-opacity-[0.2];
   }
   .cell {
-    @apply border border-primary;
-    width: 100%;
-    height: 100%;
+    @apply w-full h-full border-l border-l-primary border-t border-t-primary border-opacity-[0.2];
   }
 }

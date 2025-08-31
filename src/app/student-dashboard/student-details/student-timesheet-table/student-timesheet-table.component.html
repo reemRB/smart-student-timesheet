@@ -1,12 +1,16 @@
-<div class="timesheet-table">
-  <div></div>
+<div
+  class="shadow-lg bg-grey-light rounded-xl mb-10 border border-primary border-opacity-[0.2]"
+>
+  <div class="timesheet-table">
+    <div class="border-b border-b-primary border-opacity-[0.2]"></div>
 
-  <div class="days-row" *ngFor="let day of days">{{ day }}</div>
+    <div class="days-row" *ngFor="let day of days">{{ day }}</div>
 
-  <ng-container *ngFor="let time of timeSlots">
-    <div class="time-row">{{ time }}</div>
-    <ng-container *ngFor="let col of [].constructor(7)">
-      <div class="cell"></div>
+    <ng-container *ngFor="let time of timeSlots">
+      <div class="time-row">{{ time }}</div>
+      <ng-container *ngFor="let col of [].constructor(7)">
+        <div class="cell"></div>
+      </ng-container>
     </ng-container>
-  </ng-container>
+  </div>
 </div>
