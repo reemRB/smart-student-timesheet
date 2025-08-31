@@ -5,11 +5,11 @@
   grid-template-rows: 3rem repeat(10, 4.5rem);
 
   .days-row {
-    @apply flex items-center justify-center py-3 text-primary text-sm border-l border-l-primary border-b border-b-primary border-opacity-[0.2];
+    @apply flex items-center justify-center py-3 text-primary text-xs md:text-sm border-l border-l-primary border-b border-b-primary border-opacity-[0.2];
   }
 
   .time-row {
-    @apply flex items-center justify-center text-primary text-sm border-t border-t-primary border-opacity-[0.2];
+    @apply flex items-center justify-center text-primary text-xs md:text-sm border-t border-t-primary border-opacity-[0.2];
   }
 
   .cell {
@@ -21,7 +21,7 @@
     @apply bg-white absolute w-full rounded-md shadow-sm border border-primary border-opacity-[0.25] p-2 z-10;
     pointer-events: none;
 
-    .class-title { @apply text-sm font-medium mb-1; }
+    .class-title { @apply text-xs lg:text-sm font-medium mb-1; }
     .class-info  { @apply text-[11px]; }
   }
 

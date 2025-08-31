@@ -1,35 +1,40 @@
 <div
   class="shadow-lg bg-grey-light rounded-xl mb-10 border border-primary border-opacity-[0.2]"
 >
-  <div class="timesheet-table">
-    <div class="border-b border-b-primary border-opacity-[0.2]"></div>
+  <div class="overflow-x-auto sm:overflow-visible">
+    <div class="timesheet-table min-w-[900px] sm:min-w-0">
+      <div class="border-b border-b-primary border-opacity-[0.2]"></div>
 
-    <div class="days-row" *ngFor="let day of days">{{ day }}</div>
+      <div class="days-row" *ngFor="let day of days">{{ day }}</div>
 
-    <ng-container *ngFor="let time of timeSlots">
-      <div class="time-row">{{ time }}</div>
+      <ng-container *ngFor="let time of timeSlots">
+        <div class="time-row">{{ time }}</div>
 
-      <ng-container *ngFor="let day of days">
-        <div class="cell">
-          <ng-container *ngIf="getClassBlock(day, time) as block">
-            <div
-              class="class-block"
-              [class.class-block--active]="isActiveClass(day, time)"
-              [class.class-block--next]="!isActiveClass(day, time) && isNextClass(day, time)"
-              [style.top.%]="block.topPercentage"
-              [style.height.%]="block.heightPercentage"
-              title="{{ block.className }} • {{ time }} • {{ block.durationMin }}m"
-            >
-              <div class="class-title">
-                {{ block.className }} - {{block.roomNumber}}
+        <ng-container *ngFor="let day of days">
+          <div class="cell">
+            <ng-container *ngIf="getClassBlock(day, time) as block">
+              <div
+                class="class-block"
+                [class.class-block--active]="isActiveClass(day, time)"
+                [class.class-block--next]="!isActiveClass(day, time) && isNextClass(day, time)"
+                [style.top.%]="block.topPercentage"
+                [style.height.%]="block.heightPercentage"
+                title="{{ block.className }} • {{ time }} • {{ block.durationMin }}m"
+              >
+                <div class="class-title">
+                  {{ block.className }} - {{block.roomNumber}}
+                </div>
+                <div class="class-info">
+                  {{ time }}
+                  <span class="hidden md:inline">
+                    • {{ block.durationMin }} mins</span
+                  >
+                </div>
               </div>
-              <div class="class-info">
-                {{ time }} • {{ block.durationMin }} mins
-              </div>
-            </div>
-          </ng-container>
-        </div>
+            </ng-container>
+          </div>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 </div>

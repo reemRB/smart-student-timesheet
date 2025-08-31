@@ -1,12 +1,18 @@
 @if (studentFacade.studentDetails$ | async; as studentDetails) {
 <div class="shadow-lg bg-grey-light rounded-xl p-10">
   <div class="flex items-center gap-6">
-    <div class="avatar w-24 h-24 rounded-full"></div>
+    <div class="hidden md:block w-24 h-24 rounded-full">
+      <img
+        src="https://randomuser.me/api/portraits/men/1.jpg"
+        alt="avatar"
+        class="rounded-full"
+      />
+    </div>
     <div>
       <h2 class="text-2xl font-semi text-primary">
         {{studentDetails.data.firstName}} {{studentDetails.data.lastName}}
       </h2>
-      <div class="flex gap-8 mt-2 text-primary">
+      <div class="flex flex-wrap gap-8 mt-2 text-primary">
         <div>
           <span class="font-semi">ID:</span> {{studentDetails.data.studentId}}
         </div>
