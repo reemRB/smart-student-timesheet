@@ -1,27 +1,53 @@
 # SmartStudentTimesheet
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+## 🚀 Setup 
+Install dependencies:
+```bash
+npm install
+```
 
-## Development server
+## ▶️ Start the project
+```bash
+npm run start
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🧪 Run unit tests
+```bash
+npm run test
+```
 
-## Code scaffolding
+## 📚 How it works
+SmartStudentTimesheet is an Angular project styled with Tailwind CSS that displays a **weekly timetable** for students.  
+The backend is mocked via a **Postman API** with only two supported student IDs:
+- `12345`
+- `67890`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### SessionID
+- Each student has a `sessionID` generated in Postman.
+- It encodes the **class timestamp** (in ms) + the **studentId** using Base64.
+- In Angular, the timestamp is decoded to determine the **active class**.
 
-## Build
+### Active & Next Class
+- The timetable highlights the **current active class** (green pulsing border).
+- If no class is active, the **next class** is highlighted (orange pulsing border).
+- Classes repeat weekly, independent of calendar dates.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🎨 Features
+- Weekly grid: **Monday → Sunday** rows with **hourly time slots**.
+- Active/Next class highlight with **pulse animation**.
+- Responsive design using Tailwind:
+  - `xs` → small mobile
+  - `sm` → mobile landscape
+  - `md` → tablets
+  - `lg` → laptops
+  - `xl`, `2xl`, `3xl` → large monitors
+- Overflow handling with horizontal scroll on small screens.
 
-## Running unit tests
+## 🖼️ Screenshots
+*(Add screenshots of your timetable here)*
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📦 Tech Stack
+- Angular
+- RxJS
+- Tailwind CSS
+- Postman (Mock API)
