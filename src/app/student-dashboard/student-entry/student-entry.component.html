@@ -1,5 +1,8 @@
 <div class="min-h-screen flex items-center justify-center bg-grey-light">
-  <form class="w-full max-w-md flex flex-col items-center">
+  <form
+    class="w-full max-w-md flex flex-col items-center"
+    (ngSubmit)="onSubmit()"
+  >
     <input
       type="text"
       [(ngModel)]="studentId"
@@ -7,11 +10,22 @@
       placeholder="Insert Student ID"
       class="font-regular border border-primary border-opacity-20 focus:border-primary p-3 rounded-lg w-full outline-none placeholder-gray-400"
     />
+    @if (errorText$ | async; as errorText) {
+    <div class="text-red mt-2 w-full text-left text-sm">{{ errorText }}</div>
+    }
+
     <button
       type="submit"
       class="mt-6 px-6 py-2 bg-primary text-white rounded-lg w-full"
+      [disabled]="!studentId || (loading$ | async)"
+      [ngClass]="{ 'bg-opacity-50': !studentId || (loading$ | async) }"
     >
-      Submit
+      @if ((loading$ | async) === false) {
+      <ng-container>Submit</ng-container>
+      }@else {
+
+      <ng-container>Loading...</ng-container>
+      }
     </button>
   </form>
 </div>
