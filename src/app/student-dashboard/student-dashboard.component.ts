@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -7,5 +7,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './student-dashboard.component.scss',
   standalone: true,
   imports: [RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentDashboardComponent {}
+export class StudentDashboardComponent implements OnInit {
+  public async ngOnInit() {}
+}

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StudentCardComponent } from './student-card/student-card.component';
 import { StudentTimesheetTableComponent } from './student-timesheet-table/student-timesheet-table.component';
 
@@ -7,7 +7,8 @@ import { StudentTimesheetTableComponent } from './student-timesheet-table/studen
   selector: 'app-student-details',
   standalone: true,
   imports: [CommonModule, StudentCardComponent, StudentTimesheetTableComponent],
-  templateUrl: './student-details.component.html',
-  styleUrl: './student-details.component.scss',
+  templateUrl: './student-details.page.html',
+  styleUrl: './student-details.page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentDetailsComponent {}

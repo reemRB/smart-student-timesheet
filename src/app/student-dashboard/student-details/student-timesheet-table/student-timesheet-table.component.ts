@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-student-timesheet-table',
@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './student-timesheet-table.component.html',
   styleUrl: './student-timesheet-table.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentTimesheetTableComponent {
   public days = [

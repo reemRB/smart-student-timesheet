@@ -9,8 +9,8 @@ import { StudentEntryFacade } from './core/student-entry.facade';
   selector: 'app-student-entry',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './student-entry.component.html',
-  styleUrl: './student-entry.component.scss',
+  templateUrl: './student-entry.page.html',
+  styleUrl: './student-entry.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentEntryComponent {
