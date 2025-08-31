@@ -14,6 +14,5 @@ export const studentResolver: ResolveFn<StudentDetails | undefined> = async (
   }
   const service = inject(StudentDashboardService);
   const response = await firstValueFrom(service.fetchStudentData(studentId));
-  // TODO: needs to handle the one without data case
   return response?.data;
 };
