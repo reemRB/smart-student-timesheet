@@ -6,7 +6,7 @@ export interface StudentDetailsResponse {
   data: StudentDetails;
 }
 
-type StudentDetails = {
+export type StudentDetails = {
   firstName: string;
   lastName: string;
   studentId: string;
@@ -14,5 +14,10 @@ type StudentDetails = {
   email: string;
   address: string;
   number: string;
-  classes: { className: string; classTime: string }[];
+  classes: {
+    className: string;
+    classTimestamp: string;
+    duration: number;
+    roomNumber: string;
+  }[];
 };

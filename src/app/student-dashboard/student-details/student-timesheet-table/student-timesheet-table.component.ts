@@ -1,15 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { StudentFacade } from '../../core/student.facade';
+import { StudentDetailsFacade } from '../core/student-details.facade';
+
+// A block representing one scheduled class inside a cell of the timetable
+type ClassBlock = {
+  className: string;
+  durationMin: number;
+  roomNumber: string;
+  topPercentage: number;
+  heightPercentage: number;
+};
+
+type CellKey = `${string}|${string}`;
 
 @Component({
   selector: 'app-student-timesheet-table',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './student-timesheet-table.component.html',
-  styleUrl: './student-timesheet-table.component.scss',
+  styleUrls: ['./student-timesheet-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentTimesheetTableComponent {
+  private studentFacade = inject(StudentFacade);
+  public studentDetailsFacade: StudentDetailsFacade;
+
+  // Ordered list of days we want to render as columns (or headers)
   public days = [
     'Monday',
     'Tuesday',
@@ -19,6 +36,8 @@ export class StudentTimesheetTableComponent {
     'Saturday',
     'Sunday',
   ];
+
+  // Hourly slots
   public timeSlots = [
     '9:00 AM',
     '10:00 AM',
@@ -31,4 +50,26 @@ export class StudentTimesheetTableComponent {
     '5:00 PM',
     '6:00 PM',
   ];
+
+  public classByCell = new Map<CellKey, ClassBlock>();
+  public activeCellKey: CellKey | null = null;
+
+  constructor() {
+    this.studentDetailsFacade = new StudentDetailsFacade({
+      studentFacade: this.studentFacade,
+    });
+    this.studentDetailsFacade.setClassBlock(this.classByCell);
+  }
+
+  public getClassBlock(day: string, time: string) {
+    return this.studentDetailsFacade.getClassBlock(this.classByCell, day, time);
+  }
+
+  public isActiveClass(day: string, time: string): boolean {
+    return this.studentDetailsFacade.isActiveClass(day, time);
+  }
+
+  public isNextClass(day: string, time: string): boolean {
+    return this.studentDetailsFacade.isNextClass(day, time);
+  }
 }
