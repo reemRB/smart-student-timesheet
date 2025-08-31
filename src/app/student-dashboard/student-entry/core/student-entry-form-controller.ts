@@ -21,7 +21,6 @@ export class StudentEntryFormController implements IStudentEntryFormController {
     studentId: string,
   ): Promise<StudentEntrySubmitResult> {
     try {
-      await this.dependencies.studentFacade.fetchStudentDetails(studentId);
       const studentDetails = await firstValueFrom(
         this.dependencies.studentFacade.studentDetails$,
       );
