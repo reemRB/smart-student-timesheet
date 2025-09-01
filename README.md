@@ -21,6 +21,7 @@ SmartStudentTimesheet is an Angular project styled with Tailwind CSS that displa
 The backend is mocked via a **Postman API** with only two supported student IDs:
 - `12345`
 - `67890`
+- `12340` invalidID
 
 ### SessionID
 - Each student has a `sessionID` generated in Postman.

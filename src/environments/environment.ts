@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://9a6f8920-9744-467d-8f99-4ab5a3aaf287.mock.pstmn.io',
+  apiUrl: 'https://2b51e983-8523-45ad-afde-2437dfe003ad.mock.pstmn.io',
 };
