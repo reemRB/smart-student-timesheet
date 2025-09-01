@@ -1,6 +1,6 @@
 // features/student-details/core/student-details.facade.ts
 import { StudentFacade } from '../../core/student.facade';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { StudentDetailsResponse } from '../../core/student';
 
 import {
@@ -37,6 +37,7 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
   constructor(private dependencies: StudentDetailsFacadeDependencies) {
     this.dependencies.studentFacade.studentDetails$
       .pipe(
+        take(1),
         map((details) => {
           this.studentDetails = details;
         }),
