@@ -11,7 +11,6 @@ export function makeSessionId(
   timestampMs: number,
   studentId = '12345',
 ): string {
-  // Use btoa (browser built-in) instead of Buffer
   const encryptedTimestamp = btoa(String(timestampMs));
   return `${encryptedTimestamp}.${studentId}`;
 }
