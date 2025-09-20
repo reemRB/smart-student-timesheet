@@ -1,5 +1,4 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
 import { StudentFacade } from '../../core/student.facade';
 
 export type StudentEntrySubmitResult = 'success' | 'invalid' | 'error';
@@ -21,13 +20,10 @@ export class StudentEntryFormController implements IStudentEntryFormController {
     studentId: string,
   ): Promise<StudentEntrySubmitResult> {
     try {
-      await this.dependencies.studentFacade.fetchStudentDetails(studentId);
-      const studentDetails = await firstValueFrom(
-        this.dependencies.studentFacade.studentDetails$,
-      );
-      if (!studentDetails) {
+      if (!this.isValidStudentIdInput(studentId)) {
         return 'invalid';
       }
+
       await this.dependencies.router.navigate([studentId], {
         relativeTo: this.dependencies.route,
       });
@@ -35,5 +31,10 @@ export class StudentEntryFormController implements IStudentEntryFormController {
     } catch (_error) {
       return 'error';
     }
+  }
+
+  // Considering the student ID is 5 digits
+  private isValidStudentIdInput(studentId: string): boolean {
+    return /^\d{5}$/.test(studentId);
   }
 }

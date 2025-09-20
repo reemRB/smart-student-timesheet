@@ -1,18 +1,28 @@
 import { inject } from '@angular/core';
-import { ResolveFn } from '@angular/router';
+import { ResolveFn, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { StudentFacade } from '../../core/student.facade';
 import { StudentDetailsResponse } from '../../core/student';
 
-export const studentResolver: ResolveFn<
-  StudentDetailsResponse | undefined
-> = async (route, _state): Promise<StudentDetailsResponse | undefined> => {
+export const studentResolver: ResolveFn<StudentDetailsResponse | null> = async (
+  route,
+) => {
   const studentId = route.paramMap.get('studentId');
-  if (!studentId) {
-    throw new Error('No studentId provided');
-  }
   const facade = inject(StudentFacade);
+  const router = inject(Router);
+
+  if (!studentId) {
+    await router.navigate(['/']);
+    return null;
+  }
+
   await facade.fetchStudentDetails(studentId);
   const details = await firstValueFrom(facade.studentDetails$);
+
+  if (!details) {
+    await router.navigate(['/not-found']);
+    return null;
+  }
+
   return details;
 };
