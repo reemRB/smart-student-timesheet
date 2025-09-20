@@ -33,9 +33,6 @@ export class StudentEntryFacade implements IStudentEntryFacade {
 
   public async submit(studentId: string) {
     this._error.next(null);
-    if (this._loading.getValue()) {
-      return 'invalid';
-    }
     this._loading.next(true);
     try {
       const result =

@@ -29,9 +29,6 @@ export class StudentEntryComponent {
   public errorText$ = this.studentEntryFacade.error$;
 
   public async onSubmit() {
-    const result = await this.studentEntryFacade.submit(this.studentId);
-    if (result === 'success') {
-      this.router.navigate([this.studentId], { relativeTo: this.route });
-    }
+    await this.studentEntryFacade.submit(this.studentId);
   }
 }
