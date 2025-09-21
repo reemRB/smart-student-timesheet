@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { StudentDetailsResponse } from '../../../core/student';
-import { IStudentFacade } from '../../../core/student.facade';
+import { StudentDetailsResponse } from '../../../../core/student';
+import { IStudentFacade } from '../../../../core/student.facade';
 
 export class MockStudentFacade implements IStudentFacade {
   public studentDetails$ = new BehaviorSubject<

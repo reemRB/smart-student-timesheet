@@ -1,7 +1,7 @@
 // features/student-details/core/student-details.facade.ts
-import { IStudentFacade } from '../../core/student.facade';
+import { IStudentFacade } from '../../../core/student.facade';
 import { map, take } from 'rxjs/operators';
-import { StudentDetailsResponse } from '../../core/student';
+import { StudentDetailsResponse } from '../../../core/student';
 
 import {
   cellKey,
@@ -9,13 +9,13 @@ import {
   ClassBlock,
   dayName,
   hourLabel,
-} from './student-details-helper-functions';
+} from './student-timesheet-table-helper-functions';
 
-interface StudentDetailsFacadeDependencies {
+interface StudentTimesheetTableDependencies {
   studentFacade: IStudentFacade;
 }
 
-interface IStudentDetailsFacade {
+interface IStudentTimesheetTableManager {
   setClassBlock(map: Map<CellKey, ClassBlock>): void;
   getClassBlock(
     map: Map<CellKey, ClassBlock>,
@@ -28,13 +28,15 @@ interface IStudentDetailsFacade {
   isNextClass(day: string, time: string): boolean;
 }
 
-export class StudentDetailsFacade implements IStudentDetailsFacade {
+export class StudentTimesheetTableManager
+  implements IStudentTimesheetTableManager
+{
   private readonly secretKey = 'secretKey';
   private studentDetails: StudentDetailsResponse | undefined;
   private activeCellKey: CellKey | null = null;
   private nextActiveCellKey: CellKey | null = null;
 
-  constructor(private dependencies: StudentDetailsFacadeDependencies) {
+  constructor(private dependencies: StudentTimesheetTableDependencies) {
     this.dependencies.studentFacade.studentDetails$
       .pipe(
         take(1),

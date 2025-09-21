@@ -1,20 +1,21 @@
-import { StudentDetailsResponse } from '../../../core/student';
+import { StudentDetailsResponse } from '../../../../core/student';
 import {
   CellKey,
   ClassBlock,
   dayName,
   hourLabel,
-} from '../student-details-helper-functions';
-import { StudentDetailsFacade } from '../student-details.facade';
+} from '../student-timesheet-table-helper-functions';
+
+import { StudentTimesheetTableManager } from '../student-timesheet-table-manager';
 import {
   MockStudentFacade,
   localDate,
   makeSessionId,
-} from './student-details.facade.utility.spec';
+} from './student-mock.facade.utility.spec';
 
-describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
+describe('StudentTimesheetableManager', () => {
   let mockStudent: MockStudentFacade;
-  let facade: StudentDetailsFacade;
+  let facade: StudentTimesheetTableManager;
 
   it('sets ACTIVE when decrypted timestamp matches the current day and time, ignoring the year', () => {
     // Class: Wednesday 10:00–11:00 (any calendar date)
@@ -44,7 +45,7 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
 
     mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    facade = new StudentDetailsFacade({
+    facade = new StudentTimesheetTableManager({
       studentFacade: mockStudent,
     });
     const map = new Map<CellKey, ClassBlock>();
@@ -94,7 +95,7 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
 
     mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    facade = new StudentDetailsFacade({
+    facade = new StudentTimesheetTableManager({
       studentFacade: mockStudent,
     });
 
@@ -140,7 +141,7 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
 
     mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    facade = new StudentDetailsFacade({
+    facade = new StudentTimesheetTableManager({
       studentFacade: mockStudent,
     });
     const map = new Map<CellKey, ClassBlock>();
@@ -171,7 +172,7 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
 
     mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    facade = new StudentDetailsFacade({
+    facade = new StudentTimesheetTableManager({
       studentFacade: mockStudent,
     });
     const map = new Map<CellKey, ClassBlock>();

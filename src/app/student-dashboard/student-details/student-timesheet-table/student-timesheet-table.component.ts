@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { StudentFacade } from '../../core/student.facade';
-import { StudentDetailsFacade } from '../core/student-details.facade';
+import { StudentTimesheetTableManager } from './core/student-timesheet-table-manager';
 
 // A block representing one scheduled class inside a cell of the timetable
 type ClassBlock = {
@@ -24,7 +24,7 @@ type CellKey = `${string}|${string}`;
 })
 export class StudentTimesheetTableComponent {
   private studentFacade = inject(StudentFacade);
-  public studentDetailsFacade: StudentDetailsFacade;
+  public studentDetailsFacade: StudentTimesheetTableManager;
 
   // Ordered list of days we want to render as columns (or headers)
   public days = [
@@ -54,7 +54,7 @@ export class StudentTimesheetTableComponent {
   public classByCell = new Map<CellKey, ClassBlock>();
 
   constructor() {
-    this.studentDetailsFacade = new StudentDetailsFacade({
+    this.studentDetailsFacade = new StudentTimesheetTableManager({
       studentFacade: this.studentFacade,
     });
     this.studentDetailsFacade.setClassBlock(this.classByCell);
