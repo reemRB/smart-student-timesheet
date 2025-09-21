@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StudentEntryFacade } from './core/student-entry.facade';
+import { StudentEntryManager } from './core/student-entry-manager';
 import { StudentFacade } from '../core/student.facade';
 
 @Component({
@@ -19,16 +19,16 @@ export class StudentEntryComponent {
   private route = inject(ActivatedRoute);
   private studentFacade = inject(StudentFacade);
 
-  private studentEntryFacade = new StudentEntryFacade({
+  private studentEntryManager = new StudentEntryManager({
     studentFacade: this.studentFacade,
     router: this.router,
     route: this.route,
   });
 
-  public loading$ = this.studentEntryFacade.loading$;
-  public errorText$ = this.studentEntryFacade.error$;
+  public loading$ = this.studentEntryManager.loading$;
+  public errorText$ = this.studentEntryManager.error$;
 
   public async onSubmit() {
-    await this.studentEntryFacade.submit(this.studentId);
+    await this.studentEntryManager.submit(this.studentId);
   }
 }

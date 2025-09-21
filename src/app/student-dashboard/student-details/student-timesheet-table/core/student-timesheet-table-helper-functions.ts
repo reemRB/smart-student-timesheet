@@ -4,7 +4,7 @@ export type ClassBlock = {
   className: string;
   roomNumber: string;
   durationMin: number;
-  topPercentage: number;
+  topPositionPercentage: number;
   heightPercentage: number;
 };
 

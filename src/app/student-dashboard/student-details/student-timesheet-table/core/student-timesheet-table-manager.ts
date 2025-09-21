@@ -57,8 +57,8 @@ export class StudentTimesheetTableManager
       const day = dayName(classTime);
       const hour = hourLabel(classTime);
 
-      const topPercentage = (classTime.getMinutes() / 60) * 100;
-
+      // Positioning info
+      const topPositionPercentage = (classTime.getMinutes() / 60) * 100;
       const heightPercentage = (durationMin / 60) * 100;
 
       const key = `${day}|${hour}` as CellKey;
@@ -67,7 +67,7 @@ export class StudentTimesheetTableManager
         className: classData.className,
         roomNumber: classData.roomNumber,
         durationMin,
-        topPercentage,
+        topPositionPercentage,
         heightPercentage,
       };
       map.set(key, block);
@@ -115,7 +115,7 @@ export class StudentTimesheetTableManager
     const nowInReferenceWeekMs = nowInReferenceWeek.getTime();
 
     // Start with infinity
-    let smallestGapMs = Number.POSITIVE_INFINITY;
+    let smallestGapBetweenClassMs = Number.POSITIVE_INFINITY;
 
     let nextDayLabel = '';
     let nextHourLabel = '';
@@ -145,20 +145,21 @@ export class StudentTimesheetTableManager
       }
 
       // Calculate time until this class
-      let gapMs = classStartInReferenceWeekMs - nowInReferenceWeekMs;
+      let gapBetweenClassesMs =
+        classStartInReferenceWeekMs - nowInReferenceWeekMs;
 
       // Add a week if class is earlier in the week
-      if (gapMs <= 0) gapMs += ONE_WEEK_MS;
+      if (gapBetweenClassesMs <= 0) gapBetweenClassesMs += ONE_WEEK_MS;
 
       // Update if this class is closer than the previous best
-      if (gapMs < smallestGapMs) {
-        smallestGapMs = gapMs;
+      if (gapBetweenClassesMs < smallestGapBetweenClassMs) {
+        smallestGapBetweenClassMs = gapBetweenClassesMs;
         nextDayLabel = dayName(classStartTime);
         nextHourLabel = hourLabel(classStartTime);
       }
     }
 
-    if (smallestGapMs !== Number.POSITIVE_INFINITY) {
+    if (smallestGapBetweenClassMs !== Number.POSITIVE_INFINITY) {
       this.nextActiveCellKey = cellKey(nextDayLabel, nextHourLabel);
     }
   }

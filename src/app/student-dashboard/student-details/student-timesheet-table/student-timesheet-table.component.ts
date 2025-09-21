@@ -2,15 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { StudentFacade } from '../../core/student.facade';
 import { StudentTimesheetTableManager } from './core/student-timesheet-table-manager';
-
-// A block representing one scheduled class inside a cell of the timetable
-type ClassBlock = {
-  className: string;
-  durationMin: number;
-  roomNumber: string;
-  topPercentage: number;
-  heightPercentage: number;
-};
+import { ClassBlock } from './core/student-timesheet-table-helper-functions';
 
 type CellKey = `${string}|${string}`;
 

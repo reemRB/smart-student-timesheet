@@ -3,18 +3,18 @@ import { StudentEntryFormController } from './student-entry-form-controller';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentFacade } from '../../core/student.facade';
 
-interface IStudentEntryFacade {
-  submit(studentId: string): Promise<'success' | 'invalid' | 'error'>;
+interface IStudentEntryManager {
+  submit(studentId: string): Promise<void>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
 }
-interface IStudentEntryFacadeDependencies {
+interface IStudentEntryManagerDependencies {
   studentFacade: StudentFacade;
   router: Router;
   route: ActivatedRoute;
 }
 
-export class StudentEntryFacade implements IStudentEntryFacade {
+export class StudentEntryManager implements IStudentEntryManager {
   private studentEntryFormController: StudentEntryFormController;
 
   private _loading = new BehaviorSubject<boolean>(false);
@@ -23,7 +23,7 @@ export class StudentEntryFacade implements IStudentEntryFacade {
   public loading$ = this._loading.asObservable();
   public error$ = this._error.asObservable();
 
-  constructor(private dependencies: IStudentEntryFacadeDependencies) {
+  constructor(private dependencies: IStudentEntryManagerDependencies) {
     this.studentEntryFormController = new StudentEntryFormController({
       router: this.dependencies.router,
       route: this.dependencies.route,
@@ -42,7 +42,6 @@ export class StudentEntryFacade implements IStudentEntryFacade {
       } else if (result === 'error') {
         this._error.next('An error occurred. Please try again.');
       }
-      return result;
     } finally {
       this._loading.next(false);
     }

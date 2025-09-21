@@ -17,7 +17,7 @@
                 class="class-block"
                 [class.class-block--active]="isActiveClass(day, time)"
                 [class.class-block--next]="!isActiveClass(day, time) && isNextClass(day, time)"
-                [style.top.%]="block.topPercentage"
+                [style.top.%]="block.topPositionPercentage"
                 [style.height.%]="block.heightPercentage"
                 title="{{ block.className }} • {{ time }} • {{ block.durationMin }}m"
               >
