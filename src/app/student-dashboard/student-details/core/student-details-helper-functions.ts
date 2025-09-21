@@ -18,16 +18,17 @@ export function dayName(date: Date): string {
     'Saturday',
     'Sunday',
   ];
-  const idx = (date.getDay() + 6) % 7; // Monday=0 … Sunday=6
-  return namesMondayFirst[idx];
+  // Monday=0 … Sunday=6
+  const index = (date.getDay() + 6) % 7;
+  return namesMondayFirst[index];
 }
 
-export function hourLabel(d: Date): string {
-  const h24 = d.getHours();
+export function hourLabel(date: Date): string {
+  const h24 = date.getHours();
   const ampm = h24 < 12 ? 'AM' : 'PM';
-  let h = h24 % 12;
-  if (h === 0) h = 12;
-  return `${h}:00 ${ampm}`;
+  let hour = h24 % 12;
+  if (hour === 0) hour = 12;
+  return `${hour}:00 ${ampm}`;
 }
 
 export function cellKey(day: string, hourLabel: string): CellKey {

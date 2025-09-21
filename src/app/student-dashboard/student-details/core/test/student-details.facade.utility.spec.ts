@@ -17,11 +17,11 @@ export function makeSessionId(
 
 /** Create local Date (month is 0-based). */
 export function localDate(
-  y: number,
-  m0: number,
-  d: number,
-  h: number,
-  min = 0,
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  minute = 0,
 ): Date {
-  return new Date(y, m0, d, h, min, 0, 0);
+  return new Date(year, month, day, hour, minute, 0, 0);
 }
