@@ -1,5 +1,5 @@
 // features/student-details/core/student-details.facade.ts
-import { StudentFacade } from '../../core/student.facade';
+import { IStudentFacade } from '../../core/student.facade';
 import { map, take } from 'rxjs/operators';
 import { StudentDetailsResponse } from '../../core/student';
 
@@ -12,7 +12,7 @@ import {
 } from './student-details-helper-functions';
 
 interface StudentDetailsFacadeDependencies {
-  studentFacade: StudentFacade;
+  studentFacade: IStudentFacade;
 }
 
 interface IStudentDetailsFacade {
@@ -97,7 +97,6 @@ export class StudentDetailsFacade implements IStudentDetailsFacade {
   private computeActiveAndNextActiveCellKey(): void {
     this.activeCellKey = null;
     this.nextActiveCellKey = null;
-
     if (!this.studentDetails) return;
 
     const { timestamp } = this.decryptSessionID(this.studentDetails);

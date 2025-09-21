@@ -1,6 +1,7 @@
 import { StudentDetailsResponse } from '../../../core/student';
 import {
   CellKey,
+  ClassBlock,
   dayName,
   hourLabel,
 } from '../student-details-helper-functions';
@@ -15,12 +16,7 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
   let mockStudent: MockStudentFacade;
   let facade: StudentDetailsFacade;
 
-  beforeEach(() => {
-    mockStudent = new MockStudentFacade();
-    facade = new StudentDetailsFacade({ studentFacade: mockStudent as any });
-  });
-
-  it('sets ACTIVE when decrypted timestamp falls inside class interval (weekly, ignore real date)', () => {
+  it('sets ACTIVE when decrypted timestamp matches the current day and time, ignoring the year', () => {
     // Class: Wednesday 10:00–11:00 (any calendar date)
     const classStart = localDate(2025, 8, 3, 10, 0); // Wed Sep 3, 2025 10:00
     // "Now" is any Wednesday 10:30 on a different date
@@ -46,19 +42,24 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
       },
     };
 
+    mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    const map = new Map<CellKey, any>();
+    facade = new StudentDetailsFacade({
+      studentFacade: mockStudent,
+    });
+    const map = new Map<CellKey, ClassBlock>();
     facade.setClassBlock(map);
 
     const day = dayName(classStart); // "Wednesday"
     const hour = hourLabel(classStart); // "10:00 AM"
 
-    expect(facade.isActiveClass(day, hour)).toBeTrue();
-    // Since active is found, next should not be flagged for that same cell
-    expect(facade.isNextClass(day, hour)).toBeFalse();
+    const isActiveClass = facade.isActiveClass(day, hour);
+    const isNextClass = facade.isNextClass(day, hour);
+    expect(isActiveClass).toBeTrue();
+    expect(isNextClass).toBeFalse();
   });
 
-  it('when no active class, NEXT is the closest future class in weekly rotation', () => {
+  it('sets NEXT to the closest future class in weekly rotation when there is no active class', () => {
     // Classes: Monday 09:00, Thursday 15:00
     const mon0900 = localDate(2025, 8, 1, 9, 0);
     const thu1500 = localDate(2025, 8, 4, 15, 0);
@@ -91,8 +92,13 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
       },
     };
 
+    mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    const map = new Map<CellKey, any>();
+    facade = new StudentDetailsFacade({
+      studentFacade: mockStudent,
+    });
+
+    const map = new Map<CellKey, ClassBlock>();
     facade.setClassBlock(map);
 
     expect(
@@ -132,8 +138,12 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
       },
     };
 
+    mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    const map = new Map<CellKey, any>();
+    facade = new StudentDetailsFacade({
+      studentFacade: mockStudent,
+    });
+    const map = new Map<CellKey, ClassBlock>();
     facade.setClassBlock(map);
 
     // Not active on Friday 18:00
@@ -159,8 +169,12 @@ describe('StudentDetailsFacade (active & next, weekly semantics)', () => {
       },
     };
 
+    mockStudent = new MockStudentFacade();
     mockStudent.studentDetails$.next(resp);
-    const map = new Map<CellKey, any>();
+    facade = new StudentDetailsFacade({
+      studentFacade: mockStudent,
+    });
+    const map = new Map<CellKey, ClassBlock>();
     facade.setClassBlock(map);
 
     // Try a few sample cells — all should be false

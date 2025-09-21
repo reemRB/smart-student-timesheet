@@ -1,10 +1,15 @@
 import { BehaviorSubject } from 'rxjs';
 import { StudentDetailsResponse } from '../../../core/student';
+import { IStudentFacade } from '../../../core/student.facade';
 
-export class MockStudentFacade {
+export class MockStudentFacade implements IStudentFacade {
   public studentDetails$ = new BehaviorSubject<
     StudentDetailsResponse | undefined
   >(undefined);
+
+  async fetchStudentDetails(_studentId: string): Promise<void> {
+    return Promise.resolve();
+  }
 }
 
 export function makeSessionId(
