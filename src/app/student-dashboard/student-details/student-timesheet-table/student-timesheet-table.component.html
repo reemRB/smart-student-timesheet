@@ -1,3 +1,5 @@
+<!-- add a legend -->
+
 <div
   class="shadow-lg bg-grey-light rounded-xl mb-10 border border-primary border-opacity-[0.2]"
 >
@@ -5,13 +7,19 @@
     <div class="timesheet-table min-w-[900px] sm:min-w-0">
       <div class="border-b border-b-primary border-opacity-[0.2]"></div>
 
-      <div class="days-row" *ngFor="let day of days">{{ day }}</div>
+      <div
+        class="days-row"
+        *ngFor="let day of days"
+        [class.days-row--current]="day === currentDay"
+      >
+        {{ day }}
+      </div>
 
       <ng-container *ngFor="let time of timeSlots">
         <div class="time-row">{{ time }}</div>
 
         <ng-container *ngFor="let day of days">
-          <div class="cell">
+          <div class="cell" [class.cell--current-column]="day === currentDay">
             <ng-container *ngIf="getClassBlock(day, time) as block">
               <div
                 class="class-block"

@@ -26,6 +26,8 @@ interface IStudentTimesheetTableManager {
   isActiveClass(day: string, time: string): boolean;
 
   isNextClass(day: string, time: string): boolean;
+
+  getCurrentDay(): string | null;
 }
 
 export class StudentTimesheetTableManager
@@ -193,5 +195,11 @@ export class StudentTimesheetTableManager
     time: string,
   ) {
     return map.get(cellKey(day, time));
+  }
+
+  public getCurrentDay(): string | null {
+    if (!this.studentDetails) return null;
+    const { timestamp } = this.decryptSessionID(this.studentDetails);
+    return dayName(new Date(Number(timestamp)));
   }
 }

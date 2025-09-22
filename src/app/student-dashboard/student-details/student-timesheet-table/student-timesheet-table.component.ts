@@ -63,4 +63,8 @@ export class StudentTimesheetTableComponent {
   public isNextClass(day: string, time: string): boolean {
     return this.studentDetailsFacade.isNextClass(day, time);
   }
+
+  public get currentDay(): string | null {
+    return this.studentDetailsFacade.getCurrentDay();
+  }
 }

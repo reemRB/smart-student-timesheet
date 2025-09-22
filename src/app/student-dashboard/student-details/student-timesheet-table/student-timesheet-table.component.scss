@@ -8,6 +8,11 @@
     @apply flex items-center justify-center py-3 text-primary text-xs md:text-sm border-l border-l-primary border-b border-b-primary border-opacity-[0.2];
   }
 
+  .days-row--current {
+    @apply bg-highlight;
+  }
+
+
   .time-row {
     @apply flex items-center justify-center text-primary text-xs md:text-sm border-t border-t-primary border-opacity-[0.2];
   }
@@ -16,6 +21,9 @@
     @apply w-full h-full border-l border-l-primary border-t border-t-primary border-opacity-[0.2] relative overflow-visible;
   }
 
+  .cell--current-column {
+      @apply bg-highlight;
+    }
 
   .class-block {
     @apply bg-white absolute w-full rounded-md shadow-sm border border-primary border-opacity-[0.25] p-2 z-10;
