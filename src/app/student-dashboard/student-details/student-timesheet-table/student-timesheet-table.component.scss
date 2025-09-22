@@ -1,15 +1,4 @@
 
-.timesheet-legend {
-  .legend-item {
-    @apply flex items-center gap-2 text-primary text-xs md:text-sm;
-  }
-
-  .legend-color {
-    @apply w-4 h-4 rounded-sm border border-primary border-opacity-20;
-    display: inline-block;
-  }
-}
-
 .timesheet-table {
   @apply rounded-xl grid w-full shadow-lg;
   grid-template-columns: 4.5rem repeat(7, 1fr);
